@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load profile_extras %}
+{% block title %}Mi perfil · {{ block.super }}{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        <div class="level">
+            <div class="level-left">
+                <h1 class="title">Mi perfil</h1>
+            </div>
+            <div class="level-right">
+                <a class="button is-primary" href="{% url 'profiles:profile_edit' %}">Editar</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2 class="subtitle">Datos personales</h2>
+            <p><strong>Nombre:</strong> {{ request.user.full_name }}</p>
+            <p><strong>Correo electrónico:</strong> {{ request.user.email }}</p>
+            <p><strong>Mostrar correo al curso:</strong> {{ object.email_visible|yesno:'Sí,No' }}</p>
+        </div>
+        <div class="box">
+            <h2 class="subtitle">Familia</h2>
+            <p><strong>Padres:</strong> {{ object.get_parents_status_display|default:'Sin datos' }}</p>
+            <p><strong>Estado civil:</strong> {{ object.get_marital_status_display|default:'Sin datos' }}</p>
+            <p><strong>Número de hijos:</strong> {{ object.children_count }}</p>
+        </div>
+        <div class="box">
+            <h2 class="subtitle">Trabajo</h2>
+            <p><strong>Cargo:</strong> {{ object.job_title|default:'Sin datos' }}</p>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ object.job_summary|default:'Sin datos'|linebreaksbr }}</p>
+        </div>
+        <div class="box">
+            <h2 class="subtitle">Consentimiento y auditoría</h2>
+            <p><strong>Consentimiento:</strong> {{ object.consent_given|yesno:'Otorgado,Pendiente' }}</p>
+            <p><strong>Fecha consentimiento:</strong> {{ object.consent_timestamp|date:'d/m/Y H:i'|default:'-' }}</p>
+            <p><strong>Última actualización:</strong> {{ object.updated_at|date:'d/m/Y H:i' }}</p>
+        </div>
+        <div class="box">
+            <h2 class="subtitle">Historial de cambios</h2>
+            {% if object.audit_logs.all %}
+                <table class="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Responsable</th>
+                        <th>Cambios</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for log in object.audit_logs.all %}
+                        <tr>
+                            <td>{{ log.created_at|date:'d/m/Y H:i' }}</td>
+                            <td>{{ log.changed_by|default:'Sistema' }}</td>
+                            <td>
+                                <ul>
+                                    {% for field, values in log.changes.items %}
+                                        <li><strong>{{ field|field_label }}:</strong> de "{{ values.old|display_change:field }}" a "{{ values.new|display_change:field }}"</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">Sin registros aún.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Sin registros aún.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

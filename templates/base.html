@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Directorio exalumnos{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{%- url 'profiles:profile_detail' -%}">Directorio</a>
+    </div>
+    <div class="navbar-menu">
+        <div class="navbar-end">
+            {% if user.is_authenticated %}
+                <div class="navbar-item">{{ user.full_name }}</div>
+                <div class="navbar-item">
+                    <a class="button is-light" href="{% url 'logout' %}">Cerrar sesión</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<section class="section">
+    <div class="container">
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </div>
+</section>
+</body>
+</html>
