@@ -17,6 +17,8 @@ class AlumniProfileForm(forms.ModelForm):
             'marital_status',
             'children_count',
             'job_title',
+            'company_name',
+            'company_start_year',
             'job_summary',
             'email_visible',
         ]
@@ -29,6 +31,13 @@ class AlumniProfileForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['consent'].initial = self.instance.consent_given
         self.fields['children_count'].min_value = 0
+        current_year = timezone.now().year
+        if 'company_start_year' in self.fields:
+            self.fields['company_start_year'].min_value = 1900
+            self.fields['company_start_year'].max_value = current_year + 1
+            self.fields['company_start_year'].help_text = (
+                'Año en que entraste o fundaste la empresa actual.'
+            )
 
     def save(self, commit=True):
         profile = super().save(commit=False)

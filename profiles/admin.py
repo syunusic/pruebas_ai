@@ -5,8 +5,16 @@ from .models import AlumniProfile, ProfileAuditLog
 
 @admin.register(AlumniProfile)
 class AlumniProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'marital_status', 'children_count', 'consent_given', 'updated_at')
-    list_filter = ('marital_status', 'parents_status', 'consent_given')
+    list_display = (
+        'user',
+        'marital_status',
+        'children_count',
+        'company_name',
+        'company_start_year',
+        'consent_given',
+        'updated_at',
+    )
+    list_filter = ('marital_status', 'parents_status', 'consent_given', 'company_start_year')
     search_fields = ('user__full_name', 'user__email')
     readonly_fields = ('created_at', 'updated_at', 'consent_timestamp')
 

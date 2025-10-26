@@ -12,6 +12,8 @@ FIELD_LABELS = {
     'marital_status': 'Estado civil',
     'children_count': 'Número de hijos',
     'job_title': 'Cargo o rol',
+    'company_name': 'Empresa',
+    'company_start_year': 'Año de ingreso a la empresa',
     'job_summary': 'Descripción del trabajo',
     'email_visible': 'Mostrar correo al curso',
     'consent_given': 'Consentimiento otorgado',

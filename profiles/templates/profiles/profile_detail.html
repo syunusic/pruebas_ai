@@ -27,6 +27,8 @@
         <div class="box">
             <h2 class="subtitle">Trabajo</h2>
             <p><strong>Cargo:</strong> {{ object.job_title|default:'Sin datos' }}</p>
+            <p><strong>Empresa:</strong> {{ object.company_name|default:'Sin datos' }}</p>
+            <p><strong>Año de ingreso:</strong> {{ object.company_start_year|default:'-' }}</p>
             <p><strong>Descripción:</strong></p>
             <p>{{ object.job_summary|default:'Sin datos'|linebreaksbr }}</p>
         </div>

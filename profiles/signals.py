@@ -25,6 +25,8 @@ def log_profile_updates(sender, instance, **kwargs):
         'marital_status',
         'children_count',
         'job_title',
+        'company_name',
+        'company_start_year',
         'job_summary',
         'email_visible',
         'consent_given',

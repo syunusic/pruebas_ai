@@ -32,6 +32,13 @@ class AlumniProfile(models.Model):
     )
     children_count = models.PositiveIntegerField('número de hijos', default=0)
     job_title = models.CharField('cargo o rol', max_length=255, blank=True)
+    company_name = models.CharField('empresa', max_length=255, blank=True)
+    company_start_year = models.PositiveIntegerField(
+        'año de ingreso a la empresa',
+        blank=True,
+        null=True,
+        help_text='Año en que entraste o fundaste la empresa actual.',
+    )
     job_summary = models.TextField('resumen del trabajo', blank=True)
     email_visible = models.BooleanField(
         'mostrar correo al curso',

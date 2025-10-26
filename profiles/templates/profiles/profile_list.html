@@ -20,6 +20,9 @@
                             <th>Estado civil</th>
                             <th>Hijos</th>
                             <th>Trabajo</th>
+                            <th>Empresa</th>
+                            <th>Desde</th>
+                            <th>Descripción</th>
                             <th>Actualizado</th>
                         </tr>
                         </thead>
@@ -37,10 +40,10 @@
                                 <td>{{ profile.get_parents_status_display|default:'Sin datos' }}</td>
                                 <td>{{ profile.get_marital_status_display|default:'Sin datos' }}</td>
                                 <td>{{ profile.children_count }}</td>
-                                <td>
-                                    <strong>{{ profile.job_title|default:'Sin datos' }}</strong><br>
-                                    <span>{{ profile.job_summary|default:'Sin descripción'|truncatewords:20 }}</span>
-                                </td>
+                                <td>{{ profile.job_title|default:'Sin datos' }}</td>
+                                <td>{{ profile.company_name|default:'Sin datos' }}</td>
+                                <td>{{ profile.company_start_year|default:'-' }}</td>
+                                <td>{{ profile.job_summary|default:'Sin descripción'|truncatewords:15 }}</td>
                                 <td>{{ profile.updated_at|date:'d/m/Y H:i' }}</td>
                             </tr>
                         {% endfor %}

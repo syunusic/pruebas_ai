@@ -52,6 +52,21 @@
                     </div>
                 </div>
                 <div class="field">
+                    {{ form.company_name.label_tag }}
+                    <div class="control">
+                        {{ form.company_name }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.company_start_year.label_tag }}
+                    <div class="control">
+                        {{ form.company_start_year }}
+                    </div>
+                    {% if form.company_start_year.help_text %}
+                        <p class="help">{{ form.company_start_year.help_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
                     {{ form.job_summary.label_tag }}
                     <div class="control">
                         {{ form.job_summary }}
