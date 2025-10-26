@@ -52,7 +52,7 @@ Este proyecto implementa la primera iteración del directorio privado para tu cu
    ```
    En ese caso recuerda añadir el host o IP con el que accederás en la variable `DJANGO_ALLOWED_HOSTS` de tu `.env` (ej.: `192.168.1.50` o `intranet.colegio.cl`).
 
-Accede a `http://127.0.0.1:8000/` (o a la IP que corresponda si usas `0.0.0.0`) para entrar a la página de inicio y a `http://127.0.0.1:8000/admin/` para crear usuarios o revisar perfiles.
+Accede a `http://127.0.0.1:8000/` (o a la IP que corresponda si usas `0.0.0.0`) para ver el listado del curso y a `http://127.0.0.1:8000/admin/` para crear usuarios o revisar perfiles.
 
 > Si al instalar paquetes encuentras bloqueos de red (por ejemplo, en un servidor sin acceso a PyPI), descarga previamente las ruedas de Django y cópialas a tu entorno interno. También puedes montar un mirror interno de PyPI.
 
@@ -60,7 +60,7 @@ Accede a `http://127.0.0.1:8000/` (o a la IP que corresponda si usas `0.0.0.0`) 
 
 1. **Crear usuarios desde el admin**: Entra a `/admin/accounts/user/add/` y registra el correo y nombre.
 2. Marca "Enviar enlace de restablecer contraseña" manualmente desde el admin (menú acciones) o envía tú mismo una contraseña temporal.
-3. Comparte la URL pública `https://tu-dominio/perfil/` para que completen sus datos.
+3. Comparte la URL pública `https://tu-dominio/` para que vean el listado y `https://tu-dominio/perfil/` para que completen o editen su propia ficha.
 4. Cada vez que actualicen información clave, se generará una entrada en el historial visible solo por el dueño del perfil y los administradores.
 
 ## Próximos pasos recomendados
