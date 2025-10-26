@@ -11,13 +11,17 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = AlumniProfile
     template_name = 'profiles/profile_detail.html'
 
-    def get_object(self, queryset=None):
-        queryset = (
+    def get_queryset(self):
+        return (
             AlumniProfile.objects
             .select_related('user')
             .prefetch_related('audit_logs__changed_by')
         )
-        return queryset.get(user=self.request.user)
+
+    def get_object(self, queryset=None):
+        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
+        queryset = queryset or self.get_queryset()
+        return queryset.get(pk=profile.pk)
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -26,9 +30,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'profiles/profile_form.html'
     success_url = reverse_lazy('profiles:profile_detail')
 
+    def get_queryset(self):
+        return AlumniProfile.objects.select_related('user')
+
     def get_object(self, queryset=None):
-        queryset = AlumniProfile.objects.select_related('user')
-        return queryset.get(user=self.request.user)
+        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
+        queryset = queryset or self.get_queryset()
+        return queryset.get(pk=profile.pk)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
