@@ -16,12 +16,20 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             AlumniProfile.objects
             .select_related('user')
             .prefetch_related('audit_logs__changed_by')
+            .filter(user=self.request.user)
         )
 
     def get_object(self, queryset=None):
-        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
         queryset = queryset or self.get_queryset()
-        return queryset.get(pk=profile.pk)
+        profile = queryset.first()
+        if profile:
+            return profile
+
+        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
+        return (
+            self.get_queryset().filter(pk=profile.pk).first()
+            or profile
+        )
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -31,12 +39,19 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('profiles:profile_detail')
 
     def get_queryset(self):
-        return AlumniProfile.objects.select_related('user')
+        return AlumniProfile.objects.select_related('user').filter(user=self.request.user)
 
     def get_object(self, queryset=None):
-        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
         queryset = queryset or self.get_queryset()
-        return queryset.get(pk=profile.pk)
+        profile = queryset.first()
+        if profile:
+            return profile
+
+        profile, _ = AlumniProfile.objects.get_or_create(user=self.request.user)
+        return (
+            self.get_queryset().filter(pk=profile.pk).first()
+            or profile
+        )
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
