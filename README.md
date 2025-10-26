@@ -42,12 +42,17 @@ Este proyecto implementa la primera iteración del directorio privado para tu cu
    ```bash
    python manage.py createsuperuser --email tu-correo@dominio.cl
    ```
-7. **Inicia el servidor de desarrollo** y verifica que la aplicación responde:
+7. **Inicia el servidor de desarrollo**. Si sólo trabajarás en tu propio computador, basta con:
    ```bash
    python manage.py runserver
    ```
+   Para que el servicio acepte conexiones desde otras máquinas de tu red (por ejemplo, cuando ejecutas Django en un servidor y accedes desde tu notebook), expónlo en todas las interfaces:
+   ```bash
+   python manage.py runserver 0.0.0.0:8000
+   ```
+   En ese caso recuerda añadir el host o IP con el que accederás en la variable `DJANGO_ALLOWED_HOSTS` de tu `.env` (ej.: `192.168.1.50` o `intranet.colegio.cl`).
 
-Accede a `http://127.0.0.1:8000/` para entrar a la página de inicio y a `http://127.0.0.1:8000/admin/` para crear usuarios o revisar perfiles.
+Accede a `http://127.0.0.1:8000/` (o a la IP que corresponda si usas `0.0.0.0`) para entrar a la página de inicio y a `http://127.0.0.1:8000/admin/` para crear usuarios o revisar perfiles.
 
 > Si al instalar paquetes encuentras bloqueos de red (por ejemplo, en un servidor sin acceso a PyPI), descarga previamente las ruedas de Django y cópialas a tu entorno interno. También puedes montar un mirror interno de PyPI.
 
