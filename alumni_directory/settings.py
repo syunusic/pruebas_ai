@@ -1,11 +1,17 @@
 from pathlib import Path
 import os
 
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key-change-me')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'true').lower() == 'true'
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if not DEBUG else []
+ALLOWED_HOSTS = [
+    host.strip() for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if host.strip()
+] if not DEBUG else []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,7 +95,9 @@ LOGIN_URL = 'login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_TRUSTED_ORIGINS = [
-    origin for origin in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if origin
+    origin.strip()
+    for origin in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
 ]
 
 DATETIME_FORMAT = 'd/m/Y H:i'
