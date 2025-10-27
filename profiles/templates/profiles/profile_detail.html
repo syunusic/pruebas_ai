@@ -9,7 +9,10 @@
                 <h1 class="title">Mi perfil</h1>
             </div>
             <div class="level-right">
-                <a class="button is-primary" href="{% url 'profiles:profile_edit' %}">Editar</a>
+                <div class="buttons">
+                    <a class="button is-light" href="{% url 'password_change' %}">Cambiar clave</a>
+                    <a class="button is-primary" href="{% url 'profiles:profile_edit' %}">Editar</a>
+                </div>
             </div>
         </div>
         <div class="box">
