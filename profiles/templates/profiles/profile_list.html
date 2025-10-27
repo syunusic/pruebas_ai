@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Listado del curso · {{ block.super }}{% endblock %}
 {% block content %}
+<style>
+    .description-cell {
+        max-width: 200px; /* Ajusta este valor según necesites */
+        max-height: 60px; /* Limita la altura de la celda */
+        overflow-y: auto; /* Habilita el scroll vertical */
+        white-space: normal; /* Permite que el texto se ajuste */
+        word-wrap: break-word; /* Rompe palabras largas */
+    }
+</style>
 <div class="columns is-centered">
-    <div class="column is-10">
+    <div class="column is-full"> <!-- Cambiado de is-10 a is-full -->
         <div class="level">
             <div class="level-left">
                 <h1 class="title">Listado del curso</h1>
@@ -43,7 +52,7 @@
                                 <td>{{ profile.job_title|default:'Sin datos' }}</td>
                                 <td>{{ profile.company_name|default:'Sin datos' }}</td>
                                 <td>{{ profile.company_start_year|default:'-' }}</td>
-                                <td>{{ profile.job_summary|default:'Sin descripción'|truncatewords:15 }}</td>
+                                <td class="description-cell">{{ profile.job_summary|default:'Sin descripción' }}</td>
                                 <td>{{ profile.updated_at|date:'d/m/Y H:i' }}</td>
                             </tr>
                         {% endfor %}
