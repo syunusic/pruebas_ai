@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Ingresar · {{ block.super }}{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-4">
+        <h1 class="title">Ingresar</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label" for="id_username">Correo electrónico</label>
+                <div class="control">
+                    <input class="input" type="email" name="username" required id="id_username">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="id_password">Contraseña</label>
+                <div class="control">
+                    <input class="input" type="password" name="password" required id="id_password">
+                </div>
+            </div>
+            {% if form.errors %}
+                <p class="help is-danger">Correo o contraseña incorrectos.</p>
+            {% endif %}
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Entrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

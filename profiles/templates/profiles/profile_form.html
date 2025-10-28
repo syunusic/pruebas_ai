@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Editar perfil · {{ block.super }}{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        <h1 class="title">Actualizar datos</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="box">
+                <h2 class="subtitle">Datos personales</h2>
+                <div class="field">
+                    <label class="label" for="id_full_name">Nombre completo</label>
+                    <div class="control">
+                        <input class="input" type="text" id="id_full_name" name="full_name" value="{{ request.user.full_name }}" required>
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.email_visible.label_tag }}
+                    <div class="control">
+                        {{ form.email_visible }}
+                    </div>
+                    <p class="help">Permite que tus compañeros vean tu correo dentro del directorio.</p>
+                </div>
+            </div>
+            <div class="box">
+                <h2 class="subtitle">Familia</h2>
+                <div class="field">
+                    {{ form.parents_status.label_tag }}
+                    <div class="control">
+                        {{ form.parents_status }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.marital_status.label_tag }}
+                    <div class="control">
+                        {{ form.marital_status }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.children_count.label_tag }}
+                    <div class="control">
+                        {{ form.children_count }}
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <h2 class="subtitle">Trabajo</h2>
+                <div class="field">
+                    {{ form.job_title.label_tag }}
+                    <div class="control">
+                        {{ form.job_title }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.company_name.label_tag }}
+                    <div class="control">
+                        {{ form.company_name }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.company_start_year.label_tag }}
+                    <div class="control">
+                        {{ form.company_start_year }}
+                    </div>
+                    {% if form.company_start_year.help_text %}
+                        <p class="help">{{ form.company_start_year.help_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    {{ form.job_summary.label_tag }}
+                    <div class="control">
+                        {{ form.job_summary }}
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <h2 class="subtitle">Consentimiento</h2>
+                <div class="field">
+                    <label class="checkbox">
+                        {{ form.consent }} {{ form.consent.label }}
+                    </label>
+                </div>
+            </div>
+            <div class="field is-grouped is-justify-content-flex-end">
+                <div class="control">
+                    <a class="button" href="{% url 'profiles:profile_detail' %}">Cancelar</a>
+                </div>
+                <div class="control">
+                    <button class="button is-primary" type="submit">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
