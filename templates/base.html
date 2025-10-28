@@ -10,8 +10,13 @@
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <span class="navbar-item">Directorio exalumnos</span>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
-    <div class="navbar-menu">
+    <div id="mainNavbar" class="navbar-menu">
         <div class="navbar-start">
             {% if user.is_authenticated %}
                 <a class="navbar-item" href="{% url 'profiles:profile_list' %}">Listado</a>
@@ -42,5 +47,18 @@
         {% block content %}{% endblock %}
     </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var burger = document.querySelector('.navbar-burger');
+  var targetId = burger ? burger.getAttribute('data-target') : null;
+  var menu = targetId ? document.getElementById(targetId) : null;
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      burger.classList.toggle('is-active');
+      menu.classList.toggle('is-active');
+    });
+  }
+});
+</script>
 </body>
 </html>
