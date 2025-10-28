@@ -18,6 +18,7 @@ class AlumniProfile(models.Model):
         WIDOWED = 'widowed', 'Viudo/a'
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    apellido_solo = models.CharField('apellido (solo)', max_length=100, blank=True, null=True, db_index=True)
     parents_status = models.CharField(
         'situación de los padres',
         max_length=10,
@@ -53,6 +54,7 @@ class AlumniProfile(models.Model):
     class Meta:
         verbose_name = 'perfil de exalumno'
         verbose_name_plural = 'perfiles de exalumnos'
+        ordering = ('apellido_solo', 'user__full_name')  # secundario por nombre completo
 
     def __str__(self):
         return f'Perfil de {self.user.full_name}'

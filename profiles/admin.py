@@ -5,22 +5,22 @@ from .models import AlumniProfile, ProfileAuditLog
 
 @admin.register(AlumniProfile)
 class AlumniProfileAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'marital_status',
-        'children_count',
-        'company_name',
-        'company_start_year',
-        'consent_given',
-        'updated_at',
-    )
-    list_filter = ('marital_status', 'parents_status', 'consent_given', 'company_start_year')
-    search_fields = ('user__full_name', 'user__email')
+    list_display = ('user', 'apellido_solo', 'marital_status', 'children_count', 'company_name', 'updated_at')
+    list_filter = ('marital_status', 'parents_status')
+    search_fields = ('user__full_name', 'user__email', 'apellido_solo', 'company_name')
+    ordering = ('apellido_solo', 'user__full_name')
     readonly_fields = ('created_at', 'updated_at', 'consent_timestamp')
 
-    def save_model(self, request, obj, form, change):
-        obj._updated_by = request.user
-        super().save_model(request, obj, form, change)
+    fields = (
+        'user',
+        'apellido_solo',        # <-- acá
+        'parents_status', 'marital_status', 'children_count',
+        'job_title', 'company_name', 'company_start_year',
+        'job_summary', 'email_visible',
+        'consent_given', 'consent_timestamp',
+        'created_at', 'updated_at',
+    )
+
 
 
 @admin.register(ProfileAuditLog)

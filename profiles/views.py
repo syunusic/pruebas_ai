@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
+from django.db.models import F
 
 from .forms import AlumniProfileForm
 from .models import AlumniProfile
@@ -67,14 +68,14 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Perfil actualizado correctamente.')
         return response
 
-
-class ProfileListView(LoginRequiredMixin, ListView):
+class ProfileListView(ListView):
     model = AlumniProfile
     template_name = 'profiles/profile_list.html'
     context_object_name = 'profiles'
 
     def get_queryset(self):
         return (
-            AlumniProfile.objects.select_related('user')
-            .order_by('user__full_name', 'user__email')
+            AlumniProfile.objects
+            .filter(consent_given=True)  # ← solo los que dieron consentimiento
+            .order_by(F('apellido_solo').asc(nulls_last=True), 'user__full_name')
         )
